@@ -1,0 +1,36 @@
+@startuml
+left to right direction
+actor "Lecteurs" as lc
+actor "Bibliothecaire" as bc
+actor "Bibliothecaire specialiste de discipline" as bcs 
+rectangle Bibliotheque {
+  usecase "S'identifier" as id
+  usecase "S'identifier par carte" as idCarte
+  usecase "S'identifier par mot de passse" as idMdp 
+  usecase "Verifier mot de passe" as verifMdp
+  usecase "Echec mot de passe" as echecMdp
+  usecase "Emprunter un livre" as emprunterLivre
+  usecase "Enregistrer un pret" as pretEnregistrer
+  usecase "Livre indisponible" as livreIndispo
+  usecase "Pret inter-bibliotheque" as pretInter
+  usecase "Etre sur liste d'attente" as listeAttente
+  usecase "Obtenir de l'aide" as demanderAide
+  usecase "Aider un lecteur" as donnerAide
+}
+idCarte <|-- id
+idMdp <|-- id
+bcs <|-- bc
+id .down.> verifMdp : include
+id <.down. echecMdp : extends
+emprunterLivre .down.> pretEnregistrer : include
+lc -- idCarte
+bc -- idMdp
+bc -- idCarte
+id --> emprunterLivre
+emprunterLivre <. livreIndispo : extends
+livreIndispo -- pretInter
+livreIndispo -- listeAttente
+lc -- demanderAide
+bc -up- donnerAide
+demanderAide .> donnerAide : include
+@enduml

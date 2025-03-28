@@ -1,0 +1,63 @@
+@startuml
+
+annotation Niveau {
+    1
+    2
+    3
+    4
+}
+
+abstract class Personne {
+    nom : String
+    prenom : String
+}
+
+class Professeur {
+
+}
+
+class Assistant {
+
+}
+
+class Etudiant {
+
+}
+
+class Cours {
+
+}
+
+class Institut {
+    nom : String
+}
+
+class Filiere {
+    nom : String
+}
+
+class Discipline {
+    nom : String
+}
+
+class ProfesseurDiscipline {
+
+}
+
+Personne <|-- Professeur
+Personne <|-- Etudiant
+Personne <|-- Assistant
+Professeur "0,n" - "1" Institut : > Travaille dans
+Professeur "2" - "0, n" ProfesseurDiscipline : <
+ProfesseurDiscipline "0, n" - "1" Discipline : >
+Etudiant "0,n" - "1" Filiere : Etudie dans : >
+
+Assistant .. Discipline
+
+Cours "0, n" - "1" Professeur : > Donne par
+Cours "0, n" - "0, 3" Assistant : > Encadre par
+Cours "0, n" - "1" Discipline : > Lie a
+Cours "0, n" - "5, n" Etudiant : > Suivi par
+
+
+@enduml

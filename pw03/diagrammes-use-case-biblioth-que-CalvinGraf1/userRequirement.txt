@@ -1,0 +1,11 @@
+Acteurs : Lecteurs et bibliothécaire
+
+Description : Le lecteur doit être connecté et demander à la bibliothécaire si le livre est disponible. S'il l'est, la bibliothécaire va enregistrer le prêt, s'il ne l'est pas, le lecteur peut être mis sur la liste d'attente ou faire un prêt inter-bibliothèque.
+
+Data : Informations du lecteur, nom du livre, nom de la bibliothécaire 
+
+Stimulus : Livre demandé par le lecteur
+
+Réponse : Prêt enregistré par la bibliothécaire / Mise en liste d'attente
+
+Commentaire : Les deux acteurs doivent être authentifiées par le système d'authentification

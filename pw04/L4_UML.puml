@@ -1,0 +1,42 @@
+@startuml
+abstract class Personne {
+    nom
+}
+class Participant
+class Moniteur
+
+class Sport {
+    nom
+}
+
+class Salle {
+    capacité
+}
+
+class Equipement {
+    description
+}
+
+class Horaire {
+    Jour
+    Heure
+}
+
+class Cours {
+  niveauMin
+}
+
+note left: CE : Un moniteur doit avoir un niveau supérieur\nau niveau minimum du cours.
+
+Moniteur "0..*" -- "1..*" Sport
+(Moniteur, Sport) .. pratique
+
+Salle "1" -l- "1" Cours
+Moniteur "1" -d- "1" Cours
+Horaire "1" -u- "1" Cours
+Participant "*" -- "1" Cours
+
+Salle "*" -d- "*" Equipement : contient
+Personne <|-d- Participant
+Personne <|-d- Moniteur
+@enduml

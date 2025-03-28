@@ -1,0 +1,9 @@
+"Enregister un prêt"
+
+1. L'authentification du lecteur doit avoir été validé par le serveur d'authentification avec un transfert des données cryptées.
+2. Le lecteur doit demander à la bibliothécaire si le livre est disponible
+3. La bibliothécaire doit être présente et disponible
+4. La bibliothécaire peut enregister un prêt après une demande si le livre est disponible
+5. La bibliothécaire doit mettre le lecteur sur liste d'attente s'il le souhaite et si le livre qu'il demande n'est pas disponible
+6. Le lecteur doit être mis à la dernière place sur la liste d'attente
+7. La bibliothécaire peut enregistrer un prêt inter-bibliothèque si le lecteur le souhaite et qu'il est disponible dans une autre bibliothèque

@@ -1,0 +1,45 @@
+ @startuml
+
+ [*] --> InService
+
+ state InService {
+    [*] --> Stopped
+
+    state c0 <<choice>>
+    state join0 <<join>>
+
+    Stopped --> c0 : Floor button pressed
+    c0 --> Stopped : [doors open]
+
+    c0 --> join0 : [doors closed]
+    c0 --> join0 : [different floor]
+    join0 --> Moving
+
+    Moving --> Stopped
+
+}
+
+state Stopped {
+    [*] --> ClosedDoors
+    ClosedDoors -r-> OpenDoors : Open doors button
+    OpenDoors -l-> ClosedDoors : Closed doors button
+    OpenDoors -l-> ClosedDoors : 60s without action
+    ClosedDoors -r-> OpenDoors : Arrived at floor
+}
+
+state Moving {
+    Moving : do: move
+    Moving : exit: at a chosen floor
+}
+
+state c1 <<choice>>
+
+InService --> Blocked : dysfunction
+Blocked --> c1 : press button
+c1 --> InService[H*] : [unblock]
+c1 --> Blocked : [no reaction]
+
+Blocked --> maintenance <<exitPoint>> : emergency button
+
+
+ @enduml

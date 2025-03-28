@@ -1,0 +1,47 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+skinparam sequenceMessageAlign center
+hide footbox
+title Système de billets de concert
+
+skinparam sequence {
+ArrowColor Black
+ActorBorderColor DeepSkyBlue
+LifeLineBorderColor blue
+LifeLineBackgroundColor #A9DCDF
+
+ParticipantBorderColor DeepSkyBlue
+ParticipantBackgroundColor DodgerBlue
+ParticipantFontName Impact
+ParticipantFontSize 17
+ParticipantFontColor #A9DCDF
+
+ActorBackgroundColor aqua
+ActorFontColor DeepSkyBlue
+ActorFontSize 17
+ActorFontName Aapex
+}
+
+
+Utilisateur -> Commande: ConfirmerCommande
+Commande -> Commande : contenu_commande = RécupérerContenuCommande(id_utilisateur)
+loop billets dans panier
+    Commande -> Billet : informations_billet = RécupérerBillet(codeUnique)
+    Commande -> Concert : tarif_concert = RécupérerTarif(informations_billet)
+    Commande -> Commande : prix_total+=tarif_concert
+end
+Commande --> Utilisateur:  prix_total,moyens_de_paiement
+Utilisateur -> Commande : RéaliserPaiement(moyenDePaiement)
+Commande -> Banque: RéaliserVirement(prix_total)
+return paiement_réussi
+
+alt #LightGreen paiement réussi
+    Commande -> Messagerie : EnvoyerInformationsCommande(contenu_commande)
+    Messagerie -> Utilisateur : EnvoyerConfirmation
+else #Pink else
+    Commande -> Utilisateur: AfficheMessage(message_erreur)
+end
+
+Utilisateur -> Commande : FinaliserVente
+@enduml

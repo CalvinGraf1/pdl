@@ -1,0 +1,37 @@
+@startuml
+
+actor Utilisateur as user
+actor Administrateur as admin
+actor "Serveur d'authentification" as server
+actor "Banque" as bank
+
+usecase (Créer un compte) as createAccount
+usecase (Se connecter) as login
+usecase (Authentification multi-facteurs) as multiAuth
+usecase (Consulter informations concert) as concertInfo
+usecase (Vérifier disponibilité places) as checkPlaces
+usecase (Payer billets) as payTickets
+usecase (Envoyer confirmation) as sendConfirmation
+usecase (Billets disponibles) as ticketsAvailable
+usecase (Carte bancaire) as creditCard
+usecase (Paypal) as paypal
+usecase (Paiement accepté) as paymentAccepted
+usecase (Modifier informations concerts) as modifyConcerts
+
+createAccount -- server
+createAccount -- user
+login -- server
+user -- login
+user -- concertInfo
+multiAuth ..> login : <<extends>>
+user -- checkPlaces
+user -- payTickets
+payTickets ..> ticketsAvailable : <<include>>
+creditCard --|> payTickets
+paypal --|> payTickets
+payTickets -- bank
+sendConfirmation ..> payTickets : <<extends>>
+admin --|> user
+admin -- modifyConcerts
+
+@enduml

@@ -1,0 +1,55 @@
+@startuml
+
+class Artiste {
+    nom
+}
+
+class Salle {
+    nom
+}
+
+class Concert {
+    date
+    heure
+    tarif
+}
+
+class Utilisateur {
+    email
+    motDePasse
+}
+
+class Administrateur {}
+
+class Place {
+    numero
+}
+
+class Billet {
+    codeUnique
+}
+
+class Commande {
+    MoyenDePaiement : {PayPal, carte}
+}
+
+metaclass Messagerie {}
+
+'Relations
+Salle "1" *-- "1...*" Place : < dans
+Concert "*" -- "1" Salle : > a lieu dans
+Concert "*" -- "1...*" Artiste : > propose
+Utilisateur "1" -- "1...*" Billet : > commande
+Billet "*" -- "1" Concert
+(Utilisateur, Billet) .. Commande
+Administrateur "1" -- "*" Concert : > modifie infos
+Billet "1" -- "1" Place : > concerne
+Messagerie "1" -- "*" Utilisateur : > envoie confirmation
+
+'Héritage
+Administrateur -up-|> Utilisateur
+
+note left of Place : Le nombre de places disponibles est un champ calculé
+note left of Billet : Un billet existe dans le système même s'il n'est pas encore acheté
+
+@enduml
